@@ -1,0 +1,23 @@
+# Internal build / review artifacts
+*.backup.html
+PRODUCTION-INFO.txt
+V03-PRODUCTION-SHA256.txt
+
+# Secrets / local configuration
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Dependencies / build artifacts
+node_modules/
+dist/
+cache/
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

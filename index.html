@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SVP AgentVault — AI Proposes. Policy Decides.</title>
+
+<meta name="description"
+      content="SVP AgentVault is an AI-assisted treasury execution system on SVPChain where AI proposes actions and deterministic policy controls execution authority.">
+
+<meta name="application-name" content="SVP AgentVault">
+<meta name="theme-color" content="#050713">
+<meta name="color-scheme" content="dark">
+
+<meta name="robots" content="index,follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title"
+      content="SVP AgentVault — AI Proposes. Policy Decides.">
+<meta property="og:description"
+      content="AI-assisted treasury execution with deterministic validation, authenticated agent actions and on-chain policy enforcement on SVPChain.">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title"
+      content="SVP AgentVault — AI Proposes. Policy Decides.">
+<meta name="twitter:description"
+      content="AI-assisted treasury execution with deterministic on-chain policy enforcement on SVPChain.">
+
+<link rel="icon"
+      type="image/svg+xml"
+      href="assets/favicon.svg">
+
+<meta name="format-detection"
+      content="telephone=no">
+
+
+<style>
+:root{
+  --bg:#050713;
+  --bg2:#090d1d;
+  --panel:rgba(15,20,42,.72);
+  --line:rgba(255,255,255,.09);
+  --text:#f6f7ff;
+  --muted:#9da8c7;
+  --blue:#5f7cff;
+  --cyan:#24e5dc;
+  --green:#61f6a6;
+  --purple:#a977ff;
+  --radius:22px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(80,94,255,.20),transparent 30%),
+    radial-gradient(circle at 85% 20%,rgba(36,229,220,.12),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 75%);
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(5,7,19,.70);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  letter-spacing:-.4px;
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#04101b;
+  font-weight:900;
+  box-shadow:0 0 35px rgba(36,229,220,.25);
+}
+
+.navlinks{
+  display:flex;
+  align-items:center;
+  gap:25px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.navlinks a:hover{
+  color:white;
+}
+
+.navbutton{
+  padding:10px 16px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  color:white!important;
+  background:rgba(255,255,255,.04);
+}
+
+.hero{
+  min-height:760px;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:60px;
+  padding:80px 0;
+}
+
+.eyebrow{
+  display:inline-flex;
+  gap:9px;
+  align-items:center;
+  padding:8px 13px;
+  border:1px solid rgba(97,246,166,.22);
+  background:rgba(97,246,166,.06);
+  border-radius:999px;
+  color:#b9ffd5;
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 14px var(--green);
+}
+
+h1{
+  font-size:clamp(52px,7vw,88px);
+  line-height:.98;
+  letter-spacing:-4px;
+  max-width:780px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#9eacff,var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:18px;
+  max-width:680px;
+  margin:28px 0 34px;
+}
+
+.actions{
+  display:flex;
+  gap:13px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 19px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  font-weight:700;
+  font-size:14px;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary{
+  color:#04101b;
+  border:0;
+  background:linear-gradient(100deg,#7188ff,var(--cyan));
+  box-shadow:0 12px 40px rgba(69,166,255,.20);
+}
+
+.secondary{
+  background:rgba(255,255,255,.035);
+}
+
+.terminal{
+  position:relative;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(16,22,46,.9),rgba(8,12,28,.88));
+  border-radius:25px;
+  padding:22px;
+  box-shadow:0 30px 100px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+
+.terminal:before{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  right:-80px;
+  top:-90px;
+  background:var(--cyan);
+  filter:blur(120px);
+  opacity:.13;
+}
+
+.term-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+
+.term-dots{
+  display:flex;
+  gap:6px;
+}
+
+.term-dots span{
+  width:8px;
+  height:8px;
+  background:#45506f;
+  border-radius:50%;
+}
+
+.live{
+  color:var(--green);
+  font-size:12px;
+}
+
+.stat{
+  padding:19px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.label{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.value{
+  margin-top:4px;
+  font-weight:700;
+  word-break:break-all;
+}
+
+.success{
+  color:var(--green);
+}
+
+section{
+  padding:100px 0;
+}
+
+.section-head{
+  max-width:720px;
+  margin-bottom:45px;
+}
+
+.section-head span{
+  color:var(--cyan);
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+}
+
+h2{
+  margin-top:8px;
+  font-size:clamp(34px,5vw,54px);
+  line-height:1.05;
+  letter-spacing:-2px;
+}
+
+.section-head p{
+  color:var(--muted);
+  margin-top:16px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.card{
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:25px;
+  backdrop-filter:blur(12px);
+}
+
+.card-number{
+  color:var(--cyan);
+  font-size:12px;
+  margin-bottom:35px;
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.pipeline{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.node{
+  position:relative;
+  min-height:160px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  background:rgba(255,255,255,.025);
+}
+
+.node strong{
+  display:block;
+  margin-bottom:8px;
+}
+
+.node small{
+  color:var(--muted);
+}
+
+.node:after{
+  content:"→";
+  position:absolute;
+  right:-12px;
+  top:65px;
+  z-index:3;
+  color:var(--cyan);
+  font-size:20px;
+}
+
+.node:last-child:after{
+  display:none;
+}
+
+.proof{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.proofbox{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
+  background:linear-gradient(145deg,rgba(95,124,255,.09),rgba(36,229,220,.025));
+}
+
+.proofrow{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.proofrow:last-child{
+  border-bottom:0;
+}
+
+.proofrow span:first-child{
+  color:var(--muted);
+}
+
+.proofrow span:last-child{
+  text-align:right;
+  font-weight:700;
+  word-break:break-all;
+}
+
+.security{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.security .card{
+  min-height:170px;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:15px;
+  padding:5px 9px;
+  font-size:11px;
+  border-radius:8px;
+  color:#baffd6;
+  background:rgba(97,246,166,.08);
+  border:1px solid rgba(97,246,166,.15);
+}
+
+.cta{
+  text-align:center;
+  padding:70px 30px;
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 50% 100%,rgba(36,229,220,.14),transparent 45%),
+    rgba(255,255,255,.025);
+}
+
+.cta h2{
+  max-width:800px;
+  margin:auto;
+}
+
+.cta p{
+  max-width:650px;
+  color:var(--muted);
+  margin:20px auto 28px;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:35px 0 50px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    min-height:auto;
+  }
+
+  h1{
+    letter-spacing:-2.5px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .pipeline{
+    grid-template-columns:1fr;
+  }
+
+  .node:after{
+    content:"↓";
+    right:50%;
+    top:auto;
+    bottom:-20px;
+  }
+
+  .proof,
+  .security{
+    grid-template-columns:1fr;
+  }
+
+  .navlinks a:not(.navbutton){
+    display:none;
+  }
+}
+
+@media(max-width:560px){
+  section{
+    padding:70px 0;
+  }
+
+  .hero{
+    padding:60px 0;
+  }
+
+  h1{
+    font-size:50px;
+  }
+
+  .footer{
+    flex-direction:column;
+  }
+}
+</style>
+
+<style>
+
+/* V0.2 GRANT REVIEWER EDITION */
+
+body{
+  overflow-x:hidden;
+}
+
+.mouse-glow{
+  position:fixed;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-1;
+  background:rgba(79,120,255,.10);
+  filter:blur(90px);
+  transform:translate(-50%,-50%);
+  transition:opacity .3s;
+}
+
+.metrics{
+  width:min(1180px,92%);
+  margin:-35px auto 50px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:rgba(10,14,31,.82);
+  backdrop-filter:blur(18px);
+  box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.metric{
+  padding:22px;
+  text-align:center;
+  border-right:1px solid var(--line);
+}
+
+.metric:last-child{
+  border-right:0;
+}
+
+.metric strong{
+  display:block;
+  font-size:22px;
+  letter-spacing:-.5px;
+  color:white;
+}
+
+.metric span{
+  display:block;
+  margin-top:4px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--muted);
+}
+
+.metric .ok{
+  color:var(--green);
+}
+
+.vault-core{
+  position:absolute;
+  width:170px;
+  height:170px;
+  right:-38px;
+  bottom:-45px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+
+.vault-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1px solid rgba(36,229,220,.20);
+  animation:vaultSpin 14s linear infinite;
+}
+
+.vault-ring:before,
+.vault-ring:after{
+  content:"";
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 18px var(--cyan);
+}
+
+.vault-ring:before{
+  top:15px;
+  left:32px;
+}
+
+.vault-ring:after{
+  bottom:18px;
+  right:28px;
+}
+
+.vault-ring.two{
+  inset:22px;
+  border-color:rgba(169,119,255,.30);
+  animation-direction:reverse;
+  animation-duration:9s;
+}
+
+.vault-center{
+  width:78px;
+  height:78px;
+  display:grid;
+  place-items:center;
+  border-radius:24px;
+  background:linear-gradient(135deg,rgba(95,124,255,.28),rgba(36,229,220,.16));
+  border:1px solid rgba(36,229,220,.30);
+  box-shadow:
+    0 0 40px rgba(36,229,220,.13),
+    inset 0 0 30px rgba(95,124,255,.10);
+  font-weight:900;
+  font-size:18px;
+  color:#dffefd;
+}
+
+@keyframes vaultSpin{
+  to{transform:rotate(360deg)}
+}
+
+.pipeline .node{
+  overflow:hidden;
+  transition:transform .25s,border-color .25s,background .25s;
+}
+
+.pipeline .node:hover{
+  transform:translateY(-5px);
+  border-color:rgba(36,229,220,.32);
+  background:rgba(36,229,220,.035);
+}
+
+.pipeline .node:before{
+  content:"";
+  position:absolute;
+  left:-100%;
+  bottom:0;
+  height:2px;
+  width:100%;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  animation:flow 4s linear infinite;
+}
+
+.pipeline .node:nth-child(2):before{animation-delay:.5s}
+.pipeline .node:nth-child(3):before{animation-delay:1s}
+.pipeline .node:nth-child(4):before{animation-delay:1.5s}
+.pipeline .node:nth-child(5):before{animation-delay:2s}
+
+@keyframes flow{
+  0%{left:-100%}
+  45%,100%{left:100%}
+}
+
+.boundary-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.boundary{
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:28px;
+  background:rgba(255,255,255,.025);
+}
+
+.boundary.can{
+  border-color:rgba(97,246,166,.18);
+}
+
+.boundary.cannot{
+  border-color:rgba(255,112,130,.18);
+}
+
+.boundary-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.boundary-list{
+  display:grid;
+  gap:12px;
+}
+
+.boundary-item{
+  display:flex;
+  gap:11px;
+  color:var(--muted);
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.boundary-item:last-child{
+  border-bottom:0;
+}
+
+.check{
+  color:var(--green);
+  font-weight:900;
+}
+
+.cross{
+  color:#ff8292;
+  font-weight:900;
+}
+
+.copybox{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:12px 0 24px;
+}
+
+.txshort{
+  flex:1;
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 14px;
+  background:rgba(0,0,0,.18);
+  font-family:Consolas,monospace;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.copybtn{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.05);
+  color:white;
+  border-radius:11px;
+  padding:12px 14px;
+  cursor:pointer;
+}
+
+.copybtn:hover{
+  border-color:rgba(36,229,220,.35);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+.trustline{
+  margin-top:18px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+.trustpill{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:11px;
+  color:#bdc7e8;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+}
+
+@media(max-width:900px){
+
+  .metrics{
+    grid-template-columns:1fr 1fr;
+    margin-top:0;
+  }
+
+  .metric:nth-child(2){
+    border-right:0;
+  }
+
+  .metric:nth-child(-n+2){
+    border-bottom:1px solid var(--line);
+  }
+
+  .boundary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .vault-core{
+    opacity:.65;
+  }
+}
+
+@media(max-width:520px){
+
+  .metrics{
+    grid-template-columns:1fr;
+  }
+
+  .metric{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .metric:last-child{
+    border-bottom:0;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *{
+    scroll-behavior:auto!important;
+    animation:none!important;
+    transition:none!important;
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+}
+
+</style>
+
+<style>
+
+/* ================================================
+   V0.2C FINAL VISUAL POLISH
+   ================================================ */
+
+.scroll-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:0%;
+  height:2px;
+  z-index:999;
+  background:linear-gradient(
+    90deg,
+    var(--blue),
+    var(--purple),
+    var(--cyan)
+  );
+  box-shadow:0 0 14px rgba(36,229,220,.6);
+}
+
+section{
+  padding:78px 0;
+}
+
+.hero{
+  padding-top:65px;
+  padding-bottom:70px;
+}
+
+.navlinks a{
+  position:relative;
+  transition:color .2s ease;
+}
+
+.navlinks a:not(.navbutton):after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-9px;
+  height:2px;
+  border-radius:5px;
+  background:var(--cyan);
+  transform:scaleX(0);
+  transition:transform .25s ease;
+}
+
+.navlinks a.active{
+  color:white;
+}
+
+.navlinks a.active:after{
+  transform:scaleX(1);
+}
+
+.hero-status{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin-bottom:17px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.7px;
+  color:#aeb9db;
+}
+
+.hero-status .sep{
+  color:#485472;
+}
+
+.hero-status .verified{
+  color:var(--green);
+}
+
+.hero-status .liveproof{
+  color:var(--cyan);
+}
+
+.card,
+.proofbox,
+.boundary,
+.node{
+  transition:
+    transform .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease,
+    background .28s ease;
+}
+
+.card:hover,
+.proofbox:hover,
+.boundary:hover{
+  transform:translateY(-4px);
+  border-color:rgba(112,137,255,.25);
+  box-shadow:0 20px 55px rgba(0,0,0,.18);
+}
+
+.security .card:hover{
+  border-color:rgba(36,229,220,.23);
+}
+
+.boundary.can:hover{
+  border-color:rgba(97,246,166,.28);
+}
+
+.boundary.cannot:hover{
+  border-color:rgba(255,130,146,.27);
+}
+
+.metric{
+  transition:background .25s ease;
+}
+
+.metric:hover{
+  background:rgba(255,255,255,.025);
+}
+
+.disclosure{
+  width:min(900px,100%);
+  margin:28px auto 0;
+  padding:18px 20px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px 24px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+}
+
+.disclosure strong{
+  color:#dfe4f7;
+}
+
+.audit-pending{
+  color:#ffd98a!important;
+}
+
+.section-head{
+  margin-bottom:36px;
+}
+
+#boundaries,
+#proof,
+#security{
+  scroll-margin-top:80px;
+}
+
+.arch-glow{
+  position:absolute;
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:rgba(36,229,220,.07);
+  filter:blur(70px);
+  pointer-events:none;
+}
+
+@media(max-width:900px){
+
+  section{
+    padding:62px 0;
+  }
+
+  .hero{
+    padding-top:55px;
+    padding-bottom:55px;
+  }
+
+  .section-head{
+    margin-bottom:30px;
+  }
+}
+
+@media(max-width:560px){
+
+  section{
+    padding:52px 0;
+  }
+
+  .hero-status{
+    font-size:10px;
+  }
+
+  .disclosure{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+}
+
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "SVP AgentVault",
+  "applicationCategory": "BlockchainApplication",
+  "operatingSystem": "Web",
+  "description": "AI-assisted treasury execution system with deterministic validation and on-chain policy enforcement on SVPChain.",
+  "softwareVersion": "Testnet Release Candidate",
+  "codeRepository": "https://github.com/culsky/svp-agentvault"
+}
+</script>
+
+</head>
+
+<body>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="mouse-glow" id="mouseGlow"></div>
+
+<nav>
+  <div class="container nav">
+    <div class="brand">
+      <div class="logo">SV</div>
+      SVP AgentVault
+    </div>
+
+    <div class="navlinks">
+      <a href="#architecture" data-section="architecture">Architecture</a>
+      <a href="#proof" data-section="proof">Execution</a>
+      <a href="#security" data-section="security">Security</a>
+      <a class="navbutton"
+         href="https://github.com/culsky/svp-agentvault"
+         target="_blank"
+         rel="noopener noreferrer">
+         GitHub ↗
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<div class="container hero">
+
+  <div>
+    <div class="hero-status">
+      <span>TESTNET RC</span>
+      <span class="sep">•</span>
+      <span class="verified">EXACT MATCH</span>
+      <span class="sep">•</span>
+      <span class="liveproof">LIVE EXECUTION PROVEN</span>
+    </div>
+    <div class="eyebrow">
+      <span class="dot"></span>
+      LIVE ON SVPCHAIN TESTNET
+    </div>
+
+    <h1>
+      AI Proposes.<br>
+      <span class="gradient">Policy Decides.</span>
+    </h1>
+
+    <p>
+      An AI-assisted treasury execution system where model intelligence
+      is separated from financial authority. Deterministic validation,
+      authenticated agent actions and on-chain policy enforcement protect
+      every execution path.
+    </p>
+
+    <div class="trustline">
+      <span class="trustpill">✓ Exact-Match Source</span>
+      <span class="trustpill">✓ Live Testnet Execution</span>
+      <span class="trustpill">✓ Dedicated Agent</span>
+      <span class="trustpill">Manual Approval Boundary</span>
+    </div>
+
+    <div class="actions" style="margin-top:25px">
+
+      <a class="btn primary"
+         href="https://explorer.svpchain.com/address/0xcd6D4333BcB56c226192a478dA2d9261FdA78953"
+         target="_blank"
+         rel="noopener noreferrer">
+         View Verified Contract ↗
+      </a>
+
+      <a class="btn secondary"
+         href="https://github.com/culsky/svp-agentvault"
+         target="_blank"
+         rel="noopener noreferrer">
+         Explore GitHub
+      </a>
+
+    </div>
+  </div>
+
+  <div class="terminal">
+
+    <div class="term-head">
+      <div class="term-dots">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="live">● VERIFIED TESTNET RC</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Network</div>
+      <div class="value">SVPChain Testnet · Chain ID 2517</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">AgentVault</div>
+      <div class="value">
+        0xcd6D4333BcB56c226192a478dA2d9261FdA78953
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Source Verification</div>
+      <div class="value success">✓ Exact Match</div>
+    </div>
+
+    <div class="stat">
+      <div class="label">Execution Model</div>
+      <div class="value">AI-assisted · Manual approval retained</div>
+    </div>
+
+    <div class="vault-core">
+      <div class="vault-ring"></div>
+      <div class="vault-ring two"></div>
+      <div class="vault-center">VAULT</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="metrics reveal">
+
+  <div class="metric">
+    <strong class="ok">Exact Match</strong>
+    <span>Source Verification</span>
+  </div>
+
+  <div class="metric">
+    <strong>31 / 31</strong>
+    <span>Final Preflight Gates</span>
+  </div>
+
+  <div class="metric">
+    <strong>20 / 20</strong>
+    <span>Post Execution Audit Checks</span>
+  </div>
+
+  <div class="metric">
+    <strong class="ok">Confirmed</strong>
+    <span>Live AI-assisted TX</span>
+  </div>
+
+</div>
+
+<section id="architecture" class="reveal">
+<div class="container">
+
+  <div class="section-head">
+    <span>Execution Architecture</span>
+    <h2>Intelligence without unrestricted authority.</h2>
+    <p>
+      AI generates structured proposals. Independent deterministic
+      controls decide whether those proposals may progress toward execution.
+    </p>
+  </div>
+
+  <div class="pipeline">
+
+    <div class="node">
+      <strong>01 · Gemini AI</strong>
+      <small>Generates a structured treasury proposal.</small>
+    </div>
+
+    <div class="node">
+      <strong>02 · Validation</strong>
+      <small>Deterministic input and risk checks.</small>
+    </div>
+
+    <div class="node">
+      <strong>03 · Policy Gate</strong>
+      <small>Live AgentVault policy preflight.</small>
+    </div>
+
+    <div class="node">
+      <strong>04 · Authentication</strong>
+      <small>Sealed queue and EIP-712 agent authentication.</small>
+    </div>
+
+    <div class="node">
+      <strong>05 · SVPChain</strong>
+      <small>Approved transaction executes on-chain.</small>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<section>
+<div class="container">
+
+  <div class="section-head">
+    <span>Core Principles</span>
+    <h2>Built around explicit security boundaries.</h2>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-number">01 / UNTRUSTED AI</div>
+      <h3>AI proposes only</h3>
+      <p>
+        Model output is treated as untrusted input.
+        AI does not receive owner or guardian authority.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-number">02 / DETERMINISTIC POLICY</div>
+      <h3>Rules are enforceable</h3>
+      <p>
+        Transaction limits, daily limits, allowlists and replay protection
+        are enforced independently of AI reasoning.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-number">03 / AUTHORITY SEPARATION</div>
+      <h3>Roles stay separated</h3>
+      <p>
+        Owner, agent and guardian roles provide explicit operational
+        boundaries instead of one unrestricted execution key.
+      </p>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+
+<section id="boundaries" class="reveal">
+<div class="container">
+
+  <div class="section-head">
+    <span>Authority Boundary</span>
+    <h2>The AI is useful precisely because it is not trusted.</h2>
+    <p>
+      AgentVault separates intelligence from authority.
+      Model output can influence proposals, but cannot override deterministic
+      policy or obtain privileged treasury control.
+    </p>
+  </div>
+
+  <div class="boundary-grid">
+
+    <div class="boundary can">
+
+      <div class="boundary-title">
+        <span class="check">✓</span>
+        AI CAN
+      </div>
+
+      <div class="boundary-list">
+
+        <div class="boundary-item">
+          <span class="check">✓</span>
+          Generate structured treasury proposals
+        </div>
+
+        <div class="boundary-item">
+          <span class="check">✓</span>
+          Evaluate contextual information
+        </div>
+
+        <div class="boundary-item">
+          <span class="check">✓</span>
+          Recommend targets, values and actions
+        </div>
+
+        <div class="boundary-item">
+          <span class="check">✓</span>
+          Submit proposals into deterministic validation
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="boundary cannot">
+
+      <div class="boundary-title">
+        <span class="cross">×</span>
+        AI CANNOT
+      </div>
+
+      <div class="boundary-list">
+
+        <div class="boundary-item">
+          <span class="cross">×</span>
+          Access owner or guardian private keys
+        </div>
+
+        <div class="boundary-item">
+          <span class="cross">×</span>
+          Override AgentVault policy
+        </div>
+
+        <div class="boundary-item">
+          <span class="cross">×</span>
+          Bypass nonce or replay protection
+        </div>
+
+        <div class="boundary-item">
+          <span class="cross">×</span>
+          Independently authorize the current execution flow
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<section id="proof" class="reveal">
+<div class="container">
+
+  <div class="section-head">
+    <span>Execution Proof</span>
+    <h2>A real AI-assisted testnet execution.</h2>
+    <p>
+      The pipeline has progressed beyond simulation and produced an
+      on-chain SVPChain testnet transaction.
+    </p>
+  </div>
+
+  <div class="proof">
+
+    <div class="proofbox">
+
+      <div class="proofrow">
+        <span>Status</span>
+        <span class="success">CONFIRMED ✓</span>
+      </div>
+
+      <div class="proofrow">
+        <span>Amount</span>
+        <span>0.001 SVP</span>
+      </div>
+
+      <div class="proofrow">
+        <span>Block</span>
+        <span>7000648</span>
+      </div>
+
+      <div class="proofrow">
+        <span>Gas Used</span>
+        <span>92,731</span>
+      </div>
+
+    </div>
+
+    <div class="proofbox">
+
+      <div class="label">TRANSACTION HASH</div>
+
+      <div class="copybox">
+        <div class="txshort" title="0x16cd9db37b7d679680a1434174f62fdbec8477b552c58cd6101f61836f22243c">
+          0x16cd9db3...f22243c
+        </div>
+
+        <button
+          class="copybtn"
+          id="copyTx"
+          type="button"
+          data-tx="0x16cd9db37b7d679680a1434174f62fdbec8477b552c58cd6101f61836f22243c">
+          Copy
+        </button>
+      </div>
+
+      <a class="btn secondary"
+         href="https://explorer.svpchain.com/tx/0x16cd9db37b7d679680a1434174f62fdbec8477b552c58cd6101f61836f22243c"
+         target="_blank"
+         rel="noopener noreferrer">
+         Inspect Transaction ↗
+      </a>
+
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<section id="security">
+<div class="container">
+
+  <div class="section-head">
+    <span>Security Model</span>
+    <h2>Defense in depth.</h2>
+    <p>
+      Multiple controls sit between AI output and transaction execution.
+    </p>
+  </div>
+
+  <div class="security">
+
+    <div class="card">
+      <h3>On-chain Policy Enforcement</h3>
+      <p>
+        Per-transaction and daily spending limits, target restrictions,
+        selector allowlists and token-specific policy controls.
+      </p>
+      <div class="badge">SMART CONTRACT</div>
+    </div>
+
+    <div class="card">
+      <h3>Replay Protection</h3>
+      <p>
+        Decision hashes bind execution context including chain, vault,
+        agent, action and nonce.
+      </p>
+      <div class="badge">NONCE BOUND</div>
+    </div>
+
+    <div class="card">
+      <h3>Guardian Controls</h3>
+      <p>
+        A dedicated guardian can pause execution while ownership and
+        operational agent authority remain separated.
+      </p>
+      <div class="badge">SEPARATED AUTHORITY</div>
+    </div>
+
+    <div class="card">
+      <h3>Adversarial Validation</h3>
+      <p>
+        The pipeline has been tested against malformed proposals,
+        authentication manipulation, replay attempts and policy bypass paths.
+      </p>
+      <div class="badge">TESTNET RC</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+
+<section>
+<div class="container">
+
+  <div class="cta">
+
+    <div class="eyebrow">
+      <span class="dot"></span>
+      OPEN TESTNET EVIDENCE
+    </div>
+
+    <h2>Verify the system. Don't just trust the pitch.</h2>
+
+    <p>
+      Review the public source, verified AgentVault deployment,
+      execution evidence and reviewer documentation.
+    </p>
+
+    <div class="actions" style="justify-content:center">
+
+      <a class="btn primary"
+         href="https://github.com/culsky/svp-agentvault"
+         target="_blank"
+         rel="noopener noreferrer">
+         Review Source ↗
+      </a>
+
+      <a class="btn secondary"
+         href="https://github.com/culsky/svp-agentvault/tree/main/v1.2-reviewer"
+         target="_blank"
+         rel="noopener noreferrer">
+         Reviewer Package
+      </a>
+
+    </div>
+
+    <div class="disclosure">
+
+      <span>
+        Current stage:
+        <strong>Testnet Release Candidate</strong>
+      </span>
+
+      <span>
+        Execution:
+        <strong>Manual approval required</strong>
+      </span>
+
+      <span>
+        Independent audit:
+        <strong class="audit-pending">Not yet completed</strong>
+      </span>
+
+    </div>
+
+  </div>
+</div>
+</section>
+
+</main>
+
+
+<footer>
+<div class="container footer">
+
+  <div>
+    <strong style="color:white">SVP AgentVault</strong><br>
+    AI-assisted treasury execution on SVPChain.
+  </div>
+
+  <div>
+    Testnet RC · AI Proposes. Policy Decides.
+  </div>
+
+</div>
+</footer>
+
+
+<script>
+
+const glow = document.getElementById("mouseGlow");
+
+document.addEventListener("mousemove", (event) => {
+  if (!glow) return;
+
+  glow.style.left = event.clientX + "px";
+  glow.style.top = event.clientY + "px";
+});
+
+
+const observer = new IntersectionObserver((entries) => {
+
+  entries.forEach((entry) => {
+
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+
+  });
+
+},{
+  threshold:0.12
+});
+
+document.querySelectorAll(".reveal").forEach((element) => {
+  observer.observe(element);
+});
+
+
+const copyButton = document.getElementById("copyTx");
+
+if (copyButton) {
+
+  copyButton.addEventListener("click", async () => {
+
+    const tx = copyButton.dataset.tx;
+
+    try {
+
+      await navigator.clipboard.writeText(tx);
+
+      const original = copyButton.textContent;
+
+      copyButton.textContent = "Copied ✓";
+
+      setTimeout(() => {
+        copyButton.textContent = original;
+      },1500);
+
+    } catch {
+
+      copyButton.textContent = "Copy failed";
+
+    }
+
+  });
+
+}
+
+</script>
+
+
+<script>
+
+/* V0.2C SCROLL PROGRESS */
+
+const progressBar = document.getElementById("scrollProgress");
+
+function updateScrollProgress(){
+
+  const scrollTop =
+    document.documentElement.scrollTop ||
+    document.body.scrollTop;
+
+  const scrollHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+
+  const progress =
+    scrollHeight > 0
+      ? (scrollTop / scrollHeight) * 100
+      : 0;
+
+  if(progressBar){
+    progressBar.style.width = progress + "%";
+  }
+}
+
+window.addEventListener(
+  "scroll",
+  updateScrollProgress,
+  {passive:true}
+);
+
+updateScrollProgress();
+
+
+/* ACTIVE NAVIGATION */
+
+const navSectionLinks =
+  document.querySelectorAll(
+    ".navlinks a[data-section]"
+  );
+
+const observedSections =
+  document.querySelectorAll(
+    "#architecture, #proof, #security"
+  );
+
+const activeNavObserver =
+  new IntersectionObserver(
+
+    (entries) => {
+
+      entries.forEach((entry) => {
+
+        if(!entry.isIntersecting){
+          return;
+        }
+
+        navSectionLinks.forEach((link) => {
+          link.classList.remove("active");
+        });
+
+        const active =
+          document.querySelector(
+            '.navlinks a[data-section="' +
+            entry.target.id +
+            '"]'
+          );
+
+        if(active){
+          active.classList.add("active");
+        }
+
+      });
+
+    },
+
+    {
+      rootMargin:"-25% 0px -60% 0px",
+      threshold:0
+    }
+
+  );
+
+observedSections.forEach((section) => {
+  activeNavObserver.observe(section);
+});
+
+</script>
+</body>
+</html>
